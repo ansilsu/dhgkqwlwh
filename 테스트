@@ -1,0 +1,180 @@
+
+//헤더파일
+#include <math.h> //라이브러리 추가
+#include <SoftwareSerial.h>
+SoftwareSerial BT(2, 3);
+
+char in_data; //모든 데이터제어
+
+//핀번호
+const int thermistor1=A1; //서미스터를 아날로그 A1에 꼽는다.
+const int thermistor2=A2;
+const int thermistor3=A3;
+const int thermistor4=A4;
+const int thermistor5=A5;
+const int thermistor6=A6;
+const int thermistor7=A7;
+const int thermistor8=A8;
+
+
+float ParmB = 3435.0; //ParmB 추가
+float R25 = 10000.0; //저항 R25 지정
+float R0 = 10000.0;  //저항 R2 지정
+//서미스터 끝
+
+
+void setup() {
+ 
+  Serial.begin(9600); 
+  BT.begin(9600);
+}
+
+void loop() {
+  
+  float voltage1_value=analogRead(thermistor1);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage1=(5.0*voltage1_value)/1023.0; //위의 측정값 조율
+  float R1 = (5.0*R0)/voltage1-R0; // 저항 값 조율
+  flOat T1= 1.0/((1.0/(273.15+25.0))+(log(R1/R25)/ParmB))-273.15; //온도 값 계산
+
+  float voltage2_value=analogRead(thermistor2);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage2=(5.0*voltage2_value)/1023.0; //위의 측정값 조율
+  float R2 = (5.0*R0)/voltage2-R0; // 저항 값 조율
+  flOat T2= 1.0/((1.0/(273.15+25.0))+(log(R2/R25)/ParmB))-273.15; //온도 값 계산
+
+  float voltage3_value=analogRead(thermistor3);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage3=(5.0*voltage3_value)/1023.0; //위의 측정값 조율
+  float R3 = (5.0*R0)/voltage3-R0; // 저항 값 조율
+  flOat T3= 1.0/((1.0/(273.15+25.0))+(log(R3/R25)/ParmB))-273.15; //온도 값 계산
+
+  float voltage4_value=analogRead(thermistor4);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage4=(5.0*voltage4_value)/1023.0; //위의 측정값 조율
+  float R4 = (5.0*R0)/voltage4-R0; // 저항 값 조율
+  flOat T4= 1.0/((1.0/(273.15+25.0))+(log(R4/R25)/ParmB))-273.15; //온도 값 계산
+
+  float voltage5_value=analogRead(thermistor5);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage5=(5.0*voltage5_value)/1023.0; //위의 측정값 조율
+  float R5 = (5.0*R0)/voltage5-R0; // 저항 값 조율
+  flOat T5= 1.0/((1.0/(273.15+25.0))+(log(R5/R25)/ParmB))-273.15; //온도 값 계산
+
+  float voltage6_value=analogRead(thermistor6);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage6=(5.0*voltage6_value)/1023.0; //위의 측정값 조율
+  float R6 = (5.0*R0)/voltage6-R0; // 저항 값 조율
+  flOat T6= 1.0/((1.0/(273.15+25.0))+(log(R6/R25)/ParmB))-273.15; //온도 값 계산
+
+  float voltage7_value=analogRead(thermistor7);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage7=(5.0*voltage7_value)/1023.0; //위의 측정값 조율
+  float R7 = (5.0*R0)/voltage7-R0; // 저항 값 조율
+  flOat T7= 1.0/((1.0/(273.15+25.0))+(log(R7/R25)/ParmB))-273.15; //온도 값 계산
+
+  float voltage8_value=analogRead(thermistor8);  // 서미스터에 해당아는 voltage를 아날로그 측정값으로 측정해 값넣음
+  float voltage8=(5.0*voltage8_value)/1023.0; //위의 측정값 조율
+  float R8 = (5.0*R0)/voltage8-R0; // 저항 값 조율
+  flOat T8= 1.0/((1.0/(273.15+25.0))+(log(R8/R25)/ParmB))-273.15; //온도 값 계산
+
+  //서미스터 끝
+  
+ if ( T1>=00&&T2>=00&&T3>=00&&T4>=00&&T5>=00&&T6>=00&&T7>=00&&T8>=00&&){  //전체
+    in_data = '1';
+    delay(300);
+    Serial.println(in_data);
+    BT.println(in_data);
+    }
+ else if (T1>=00&&T2>=00&&T3>=00&&T4>=00){  //1/2
+    in_data = '2';
+    Serial.println(in_data);
+    BT.println(in_data);
+    delay(300);
+    }
+ else if (T5>=00&&T6>=00&&T7>=00&&T8>=00){ //1/2
+    in_data = '3';
+    Serial.println(in_data);
+    BT.println(in_data);
+    
+    }
+ else if (T1>=00&&T2>=00){ //1/4
+    in_data = '4';
+    Serial.println(in_data);
+    BT.println(in_data);
+    
+    delay(300);
+    }
+ else if ( T3>=00&&T4>=00){ //1/4
+    in_data = '5';
+    Serial.println(in_data);
+    BT.println(in_data);
+    
+    }
+ else if ( T5>=00&&T6>=00){ //1/4
+    in_data = '6';
+    
+    delay(300);
+    Serial.println(in_data);
+    BT.println(in_data);
+    }
+ else if ( T7>=00&&T8>=00)//1/4
+ { 
+    in_data = '7';
+    
+    delay(300);
+    Serial.println(in_data);
+    BT.println(in_data);
+    }
+ else if ( T1>=00&&){ 
+    in_data = '8';
+    
+    delay(300);
+    Serial.println(in_data);
+    BT.println(in_data);
+    }
+ else if (T2>=00&&){ 
+    in_data = 'D';
+    delay(3000);
+    Serial.println(in_data);
+    BT.println(in_data);
+   }
+ else if (T3>=00&&){ //mp3 중간 심박
+    in_data = 'E';
+    delay(3000);
+    Serial.println(in_data);
+    BT.println(in_data);
+   }
+ else if (T4>=00&&){ //mp3 빠른 심박
+    in_data = 'F';
+    delay(3000);
+    Serial.println(in_data);
+    BT.println(in_data);
+   } 
+  
+ else if (T5>=00&&){  //온도에 따른 led
+    in_data = 'A';
+    delay(3000); 
+    Serial.println(in_data);
+    BT.println(in_data);
+  }
+ else if (T6>=00&&)
+    { 
+    in_data = 'B'; //led
+    delay(3000);
+    Serial.println(in_data);
+    BT.println(in_data);
+   }
+ else if (T7>=00&&)
+    {
+     in_data = 'C'; //led
+     delay(3000);
+     Serial.println(in_data);
+     BT.println(in_data);
+     }
+ else if (T8>=00&& ) 
+   {
+    if(digitalRead(12)==HIGH) //발열패드
+    { 
+     in_data = 'G';
+     delay(10000);
+     Serial.println(in_data);
+    BT.println(in_data);
+     }
+     
+   }
+   
+}
